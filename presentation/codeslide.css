@@ -1,0 +1,6 @@
+.codeslide h1 {
+    border: 0px !important;
+    background-color: white !important;
+    color: black  !important;
+    z-index: 1000;
+}
