@@ -4,3 +4,7 @@
     color: black  !important;
     z-index: 1000;
 }
+
+pre[class*="language-"]:before, pre[class*="language-"]:after {
+    display: none !important;
+}
