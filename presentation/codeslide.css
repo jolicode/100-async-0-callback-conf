@@ -5,6 +5,10 @@
     z-index: 1000;
 }
 
+a, a:checked, a:visited {
+    color: rgb(0, 0, 238);
+}
+
 pre[class*="language-"]:before, pre[class*="language-"]:after {
     display: none !important;
 }

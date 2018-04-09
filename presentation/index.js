@@ -20,6 +20,7 @@ import {
     Layout,
     Fill,
     Fit,
+    Link,
 } from "spectacle";
 
 // Import theme
@@ -29,11 +30,15 @@ import createTheme from "spectacle/lib/themes/default";
 require("normalize.css");
 
 const images = {
-    paImage: require('../assets/Diagram-5-Pause.svg'),
     call: require('../assets/Diagram-1-Call.svg'),
     yieldImage: require('../assets/Diagram-2-Yield.svg'),
-    resume: require('../assets/Diagram-3-Resume.svg'),
+    resume: require('../assets/Diagram-7-Resume.svg'),
     returnImage: require('../assets/Diagram-4-Resume.svg'),
+    paImage: require('../assets/Diagram-5-Pause.svg'),
+    yieldAndResume: require('../assets/Diagram-6-Yield-Resume.svg'),
+    yieldAndResumeFiber: require('../assets/Diagram-8-Pause-Resume.svg'),
+    jolicode: require('../assets/jolicode.png'),
+    redirectionio: require('../assets/redirectionio.svg'),
 };
 
 preloader(images);
@@ -75,15 +80,15 @@ ClearCodePaneContext.childContextTypes = {
 export default class Presentation extends React.Component {
     render() {
         return (
-            <Deck transitionDuration={500} theme={theme}>
+            <Deck theme={theme} progress="number" contentWidth={1440}>
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                   0%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
@@ -92,8 +97,30 @@ export default class Presentation extends React.Component {
                         </Fill>
                     </Layout>
                 </Slide>
-                <Slide>
-                    <Heading size={2}>Moi</Heading>
+                <Slide bgColor="white" align={"center center"}>
+                    <Layout>
+                        <Fill>
+                            <Heading size={3} lineHeight={1} textColor="black">
+                                Joel Wurtz
+                            </Heading>
+                            <Text margin={30}>
+                                Travaille sur <Link href={"https://twitter.com/redirectionio"} target="_blank">@redirectionio</Link><br />
+                                Un service par <Link href={"https://twitter.com/jolicode"} target="_blank">@jolicode</Link>
+                            </Text>
+                            <Image height="92" src={images.redirectionio} display="inline" margin={50}/>
+                        </Fill>
+                        <Fill>
+                            <Heading size={3} lineHeight={1} textColor="black">
+                                @joelwurtz
+                            </Heading>
+                            <Text margin={30}>
+                                <Link href={"https://twitter.com/joelwurtz"} target="_blank">Twitter</Link>
+                                <br />
+                                <Link href={"https://github.com/joelwurtz"} target="_blank">GitHub</Link>
+                            </Text>
+                            <Image src={images.jolicode} display="inline" margin={50}/>
+                        </Fill>
+                    </Layout>
                 </Slide>
                 <Slide>
                     <Heading size={2}>Asynchrone ?</Heading>
@@ -154,13 +181,13 @@ export default class Presentation extends React.Component {
                     ]}
                 />
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                 100%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
@@ -244,14 +271,14 @@ $promise
                     </ClearCodePaneContext>
                 </Slide>
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                 50%<br />
                                 50%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
@@ -361,13 +388,13 @@ $promise->onResolve(function ($response, $error) {
                     </List>
                 </Slide>
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                 0%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
@@ -377,15 +404,15 @@ $promise->onResolve(function ($response, $error) {
                     </Layout>
                 </Slide>
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                 0%<br />
                                 50%<br />
                                 50%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
@@ -455,9 +482,12 @@ $json = json_decode($body);
                     </ClearCodePaneContext>
                 </Slide>
                 <Slide>
-                    <Heading size={2} fit>Generator vs Fiber</Heading>
-                    <Image width="100%" src={images.yieldImage} />
-                    <Image width="100%" src={images.paImage} />
+                    <Heading size={2}>Generator</Heading>
+                    <Image width="100%" src={images.yieldAndResume} padding={30} />
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Fiber</Heading>
+                    <Image width="100%" src={images.yieldAndResumeFiber} padding={30} />
                 </Slide>
                 <Slide>
                     <Heading size={2}>Créer une Fiber</Heading>
@@ -546,15 +576,15 @@ echo $read;
                     <Text>Etre asynchrone n'est plus qu'un détail d'implémentation</Text>
                 </Slide>
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                 0%<br />
                                 0%<br />
                                 0%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
@@ -566,13 +596,13 @@ echo $read;
                     </Layout>
                 </Slide>
                 <Slide>
-                    <Layout>
-                        <Fit>
+                    <Layout style={{ display: "inline-box" }}>
+                        <Fill>
                             <Heading textAlign="right" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 100%<br />
                                 100%
                             </Heading>
-                        </Fit>
+                        </Fill>
                         <Fill>
                             <Heading textAlign="left" size={2} caps textColor="secondary" bgColor="white" margin={10}>
                                 Asynchrone<br />
