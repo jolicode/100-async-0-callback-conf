@@ -30,6 +30,7 @@ import createTheme from "spectacle/lib/themes/default";
 require("normalize.css");
 
 const images = {
+    amp: require('../assets/amp-logo.png'),
     call: require('../assets/Diagram-1-Call.svg'),
     yieldImage: require('../assets/Diagram-2-Yield.svg'),
     resume: require('../assets/Diagram-7-Resume.svg'),
@@ -306,6 +307,7 @@ $promise
                 </Slide>
                 <Slide>
                     <Heading size={2} fit>PHP ? AMP avec yield</Heading>
+                    <Image src={images.amp} display="inline" margin={10}/>
                 </Slide>
                 <Slide>
                     <Heading size={2}>Yield</Heading>
@@ -612,9 +614,23 @@ echo $read;
                         </Fill>
                     </Layout>
                 </Slide>
-                <Slide>
-                    <Heading size={2}>Merci</Heading>
-                    <Heading size={4}>Questions ?</Heading>
+                <Slide bgColor="white" align={"center center"}>
+                    <Layout>
+                        <Fill>
+                            <List>
+                                <ListItem><Link href={"https://reactphp.org/"} target="_blank">https://reactphp.org/</Link></ListItem>
+                                <ListItem><Link href={"https://amphp.org/"} target="_blank">https://amphp.org/</Link></ListItem>
+                                <ListItem><Link href={"https://wiki.php.net/rfc/fiber"} target="_blank">Fiber RFC</Link></ListItem>
+                                <ListItem><Link href={"https://github.com/jolicode/asynit"} target="_blank">Asynit</Link></ListItem>
+                                <Image height="92" src={images.redirectionio} display="inline" margin={85}/>
+                            </List>
+                        </Fill>
+                        <Fill>
+                            <Heading size={2}>Merci</Heading>
+                            <Heading size={4} margin={50}>Questions ?</Heading>
+                            <Image src={images.jolicode} display="inline" margin={50}/>
+                        </Fill>
+                    </Layout>
                 </Slide>
             </Deck>
         );
