@@ -360,6 +360,7 @@ $promise->onResolve(function ($response, $error) {
                 <Slide>
                     <Heading size={2}>Librairies</Heading>
                     <List>
+                        <ListItem>Tous les librairies de ReactPHP</ListItem>
                         <ListItem>EventLoop</ListItem>
                         <ListItem>Socket</ListItem>
                         <ListItem>Dns</ListItem>
