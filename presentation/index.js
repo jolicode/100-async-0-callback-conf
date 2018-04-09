@@ -29,7 +29,7 @@ import createTheme from "spectacle/lib/themes/default";
 require("normalize.css");
 
 const images = {
-    pauseImage: require('../assets/Diagram-5-Pause.svg'),
+    paImage: require('../assets/Diagram-5-Pause.svg'),
     call: require('../assets/Diagram-1-Call.svg'),
     yieldImage: require('../assets/Diagram-2-Yield.svg'),
     resume: require('../assets/Diagram-3-Resume.svg'),
@@ -196,15 +196,12 @@ sendRequestAsync($fooRequest, function ($response) {
                 </Slide>
                 <Slide>
                     <Heading size={2}>ReactPHP</Heading>
-                </Slide>
-                <Slide>
-                    <Heading size={2}>ReactPHP</Heading>
                     <List>
-                        <ListItem>EventLoop</ListItem>
-                        <ListItem>Socket</ListItem>
-                        <ListItem>HTTP Server/Client</ListItem>
-                        <ListItem>DNS</ListItem>
-                        <ListItem>...</ListItem>
+                        <Appear><ListItem>EventLoop</ListItem></Appear>
+                        <Appear><ListItem>Socket</ListItem></Appear>
+                        <Appear><ListItem>HTTP Server/Client</ListItem></Appear>
+                        <Appear><ListItem>DNS</ListItem></Appear>
+                        <Appear><ListItem>...</ListItem></Appear>
                     </List>
                 </Slide>
                 <Slide>
@@ -275,16 +272,13 @@ $promise
                 </Slide>
                 <Slide>
                     <Heading size={2}>Async / Await</Heading>
-                </Slide>
-                <Slide>
-                    <Heading size={2}>Async / Await</Heading>
                     <List>
-                        <ListItem>Javascript</ListItem>
-                        <ListItem>C#</ListItem>
+                        <Appear><ListItem>Javascript</ListItem></Appear>
+                        <Appear><ListItem>C#</ListItem></Appear>
                     </List>
                 </Slide>
                 <Slide>
-                    <Heading size={2}>PHP ? AMP avec yield</Heading>
+                    <Heading size={2} fit>PHP ? AMP avec yield</Heading>
                 </Slide>
                 <Slide>
                     <Heading size={2}>Yield</Heading>
@@ -461,8 +455,9 @@ $json = json_decode($body);
                     </ClearCodePaneContext>
                 </Slide>
                 <Slide>
-                    <Heading size={2} fit>Stackfull Generator</Heading>
-                    <Image width="100%" src={images.pauseImage.replace('/', '')} />
+                    <Heading size={2} fit>Generator vs Fiber</Heading>
+                    <Image width="100%" src={images.yieldImage} />
+                    <Image width="100%" src={images.paImage} />
                 </Slide>
                 <Slide>
                     <Heading size={2}>Créer une Fiber</Heading>
