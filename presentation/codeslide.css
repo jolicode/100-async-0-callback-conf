@@ -5,6 +5,10 @@
     z-index: 1000;
 }
 
+.codeslide pre {
+    padding: 20% 0;
+}
+
 a, a:checked, a:visited {
     color: rgb(0, 0, 238);
 }
