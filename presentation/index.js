@@ -346,16 +346,16 @@ $promise->onResolve(function ($response, $error) {
                     <Heading size={2}>Magie ?</Heading>
                 </Slide>
                 <Slide>
-                    <Image width="100%" src={images.call.replace('/', '')} />
+                    <Image width="100%" src={images.call} />
                 </Slide>
                 <Slide>
-                    <Image width="100%" src={images.yieldImage.replace('/', '')} />
+                    <Image width="100%" src={images.yieldImage} />
                 </Slide>
                 <Slide>
-                    <Image width="100%" src={images.resume.replace('/', '')} />
+                    <Image width="100%" src={images.resume} />
                 </Slide>
                 <Slide>
-                    <Image width="100%" src={images.returnImage.replace('/', '')} />
+                    <Image width="100%" src={images.returnImage} />
                 </Slide>
                 <Slide>
                     <Heading size={2}>Librairies</Heading>

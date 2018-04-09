@@ -6,7 +6,7 @@
 }
 
 .codeslide pre {
-    padding: 20% 0;
+    padding: 20% 0 !important;
 }
 
 a, a:checked, a:visited {
