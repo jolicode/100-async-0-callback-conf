@@ -138,14 +138,24 @@ export default class Presentation extends React.Component {
                     </Text>
                 </Slide>
                 <Slide>
-                    <Heading fit size={1}>Event Loop</Heading>
+                    <Heading fit size={1}>Javascript n'est pas asynchrone</Heading>
+                    <Appear endValue order={1}><Heading fit size={1}>Mais NodeJS oui</Heading></Appear>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>EventLoop ?</Heading>
                     <Text size={6}>
                         Capture les appels asynchrone et envoie un evenement lors de leurs resolution.
                     </Text>
                 </Slide>
                 <Slide>
-                    <Heading fit size={1}>Javascript n'est pas asynchrone</Heading>
-                    <Appear endValue order={1}><Heading fit size={1}>Mais NodeJS oui</Heading></Appear>
+                    <Heading size={2}>EventLoop ?</Heading>
+                    <List>
+                        <Appear><ListItem>Comme n'importe quel système d'evenement (symfony/event-dispatcher)</ListItem></Appear>
+                        <Appear><ListItem>Un registre de listeners: Watchers</ListItem></Appear>
+                        <Appear><ListItem>Un dispatcher</ListItem></Appear>
+                        <Appear><ListItem>Boucle (Loop) sur lui même</ListItem></Appear>
+                        <Appear><ListItem>Evenements proviennent d'une source externe (IO)</ListItem></Appear>
+                    </List>
                 </Slide>
                 <Slide>
                     <Heading size={2}>En PHP ?</Heading>
