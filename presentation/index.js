@@ -153,9 +153,9 @@ export default class Presentation extends React.Component {
                         <ListItem>stream_select</ListItem>
                         <ListItem>pcntl_async_signals (>= 7.1)</ListItem>
                         <ListItem>Workers : RabbitMQ / Gearman / ...</ListItem>
-                        <ListItem>Ajax</ListItem>
-                        <ListItem>proc_exec (ou pas)</ListItem>
-                        <ListItem>No Event Loop</ListItem>
+                        <ListItem>proc_exec</ListItem>
+                        <ListItem>Ajax...</ListItem>
+                        <ListItem>Mais pas d'event loop</ListItem>
                     </List>
                 </Slide>
                 <CodeSlide
