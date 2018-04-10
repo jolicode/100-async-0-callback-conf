@@ -377,7 +377,7 @@ $promise->onResolve(function ($response, $error) {
                         <ListItem>Socket</ListItem>
                         <ListItem>Dns</ListItem>
                         <ListItem>HTTP Server (HTTP 2 support)</ListItem>
-                        <ListItem>HTTP Client (HTTP 2 support)</ListItem>
+                        <ListItem>HTTP Client</ListItem>
                         <ListItem>Websocket</ListItem>
                         <ListItem>MySQL</ListItem>
                         <ListItem>PostgreSQL</ListItem>
