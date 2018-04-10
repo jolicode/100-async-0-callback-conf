@@ -144,17 +144,17 @@ export default class Presentation extends React.Component {
                 <Slide>
                     <Heading size={2}>EventLoop ?</Heading>
                     <Text size={6}>
-                        Capture les appels asynchrone et envoie un evenement lors de leurs resolution.
+                        Capture les appels asynchrone et envoie un événement lors de leur résolution.
                     </Text>
                 </Slide>
                 <Slide>
                     <Heading size={2}>EventLoop ?</Heading>
                     <List>
-                        <Appear><ListItem>Comme n'importe quel système d'evenement (symfony/event-dispatcher)</ListItem></Appear>
+                        <Appear><ListItem>Comme n'importe quel système d'événement (symfony/event-dispatcher)</ListItem></Appear>
                         <Appear><ListItem>Un registre de listeners: Watchers</ListItem></Appear>
                         <Appear><ListItem>Un dispatcher</ListItem></Appear>
                         <Appear><ListItem>Boucle (Loop) sur lui même</ListItem></Appear>
-                        <Appear><ListItem>Evenements proviennent d'une source externe (IO)</ListItem></Appear>
+                        <Appear><ListItem>Evénements proviennent d'une source externe (IO)</ListItem></Appear>
                     </List>
                 </Slide>
                 <Slide>
@@ -164,7 +164,7 @@ export default class Presentation extends React.Component {
                         <ListItem>stream_select</ListItem>
                         <ListItem>pcntl_async_signals (>= 7.1)</ListItem>
                         <ListItem>Workers : RabbitMQ / Gearman / ...</ListItem>
-                        <ListItem>proc_exec</ListItem>
+                        <ListItem>proc_open</ListItem>
                         <ListItem>Ajax...</ListItem>
                         <ListItem>Mais pas d'event loop</ListItem>
                     </List>
