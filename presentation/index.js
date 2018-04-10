@@ -144,17 +144,17 @@ export default class Presentation extends React.Component {
                 <Slide>
                     <Heading size={2}>EventLoop ?</Heading>
                     <Text size={6}>
-                        Capture les appels asynchrone et envoie un événement lors de leur résolution.
+                        Capture les appels asynchrones et envoie un événement lors de leur résolution.
                     </Text>
                 </Slide>
                 <Slide>
                     <Heading size={2}>EventLoop ?</Heading>
                     <List>
                         <Appear><ListItem>Comme n'importe quel système d'événement (symfony/event-dispatcher)</ListItem></Appear>
-                        <Appear><ListItem>Un registre de listeners: Watchers</ListItem></Appear>
+                        <Appear><ListItem>Un registre de listeners : Watchers</ListItem></Appear>
                         <Appear><ListItem>Un dispatcher</ListItem></Appear>
                         <Appear><ListItem>Boucle (Loop) sur lui même</ListItem></Appear>
-                        <Appear><ListItem>Evénements proviennent d'une source externe (IO)</ListItem></Appear>
+                        <Appear><ListItem>Événements proviennent d'une source externe (IO)</ListItem></Appear>
                     </List>
                 </Slide>
                 <Slide>
@@ -303,7 +303,7 @@ $promise
                     <Heading size={2}>Promise :/</Heading>
                     <List>
                         <ListItem>Impossible de typehint un callback (PHP)</ListItem>
-                        <ListItem>Impossible de renvoyer une promise dans un callable (depend de l'implementation)</ListItem>
+                        <ListItem>Impossible de renvoyer une promise dans un callable (dépend de l'implementation)</ListItem>
                         <ListItem>Then, then, then, then ....</ListItem>
                         <ListItem>Simplement un standard sur les callbacks</ListItem>
                     </List>
@@ -372,7 +372,7 @@ $promise->onResolve(function ($response, $error) {
                 <Slide>
                     <Heading size={2}>Librairies</Heading>
                     <List>
-                        <ListItem>Tous les librairies de ReactPHP</ListItem>
+                        <ListItem>Toutes les librairies de ReactPHP</ListItem>
                         <ListItem>EventLoop</ListItem>
                         <ListItem>Socket</ListItem>
                         <ListItem>Dns</ListItem>
@@ -391,7 +391,7 @@ $promise->onResolve(function ($response, $error) {
                     </List>
                 </Slide>
                 <Slide>
-                    <Heading size={2}>Cas d'utilisations</Heading>
+                    <Heading size={2}>Cas d'utilisation</Heading>
                     <List>
                         <ListItem>Tests (jolicode/asynit)</ListItem>
                         <ListItem>Import de données</ListItem>
@@ -586,7 +586,7 @@ echo $read;
                 </Slide>
                 <Slide>
                     <Heading size={2}>Sync / Async API Compatible</Heading>
-                    <Text>Etre asynchrone n'est plus qu'un détail d'implémentation</Text>
+                    <Text>Être asynchrone n'est plus qu'un détail d'implémentation</Text>
                 </Slide>
                 <Slide>
                     <Layout style={{ display: "inline-box" }}>
