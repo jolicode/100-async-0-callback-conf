@@ -144,7 +144,7 @@ export default class Presentation extends React.Component {
                 <Slide>
                     <Heading size={2}>EventLoop ?</Heading>
                     <Text size={6}>
-                        Capture les appels asynchrones et envoie un événement lors de leurs resolutions.
+                        Capture les appels asynchrones et envoie un événement lors de leur résolution.
                     </Text>
                 </Slide>
                 <Slide>
@@ -153,7 +153,7 @@ export default class Presentation extends React.Component {
                         <Appear><ListItem>Comme n'importe quel système d'événement (symfony/event-dispatcher)</ListItem></Appear>
                         <Appear><ListItem>Un registre de listeners : Watchers</ListItem></Appear>
                         <Appear><ListItem>Un dispatcher</ListItem></Appear>
-                        <Appear><ListItem>Boucle (Loop) sur lui-même</ListItem></Appear>
+                        <Appear><ListItem>Boucle (Loop) sur lui même</ListItem></Appear>
                         <Appear><ListItem>Événements proviennent d'une source externe (IO)</ListItem></Appear>
                     </List>
                 </Slide>
@@ -164,7 +164,7 @@ export default class Presentation extends React.Component {
                         <ListItem>stream_select</ListItem>
                         <ListItem>pcntl_async_signals (>= 7.1)</ListItem>
                         <ListItem>Workers : RabbitMQ / Gearman / ...</ListItem>
-                        <ListItem>proc_exec</ListItem>
+                        <ListItem>proc_open</ListItem>
                         <ListItem>Ajax...</ListItem>
                         <ListItem>Mais pas d'event loop</ListItem>
                     </List>
@@ -377,7 +377,7 @@ $promise->onResolve(function ($response, $error) {
                         <ListItem>Socket</ListItem>
                         <ListItem>Dns</ListItem>
                         <ListItem>HTTP Server (HTTP 2 support)</ListItem>
-                        <ListItem>HTTP Client (HTTP 2 support)</ListItem>
+                        <ListItem>HTTP Client</ListItem>
                         <ListItem>Websocket</ListItem>
                         <ListItem>MySQL</ListItem>
                         <ListItem>PostgreSQL</ListItem>
