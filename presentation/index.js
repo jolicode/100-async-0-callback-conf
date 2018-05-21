@@ -142,19 +142,21 @@ export default class Presentation extends React.Component {
                     <Appear endValue order={1}><Heading fit size={1}>Mais NodeJS oui</Heading></Appear>
                 </Slide>
                 <Slide>
+                    <Heading size={2}>Asynchrone = EventLoop</Heading>
+                </Slide>
+                <Slide>
                     <Heading size={2}>EventLoop ?</Heading>
                     <Text size={6}>
                         Capture les appels asynchrones et envoie un événement lors de leur résolution.
                     </Text>
                 </Slide>
                 <Slide>
-                    <Heading size={2}>EventLoop ?</Heading>
+                    <Heading size={2}>Event + Loop</Heading>
                     <List>
                         <Appear><ListItem>Comme n'importe quel système d'événement (symfony/event-dispatcher)</ListItem></Appear>
                         <Appear><ListItem>Un registre de listeners : Watchers</ListItem></Appear>
-                        <Appear><ListItem>Un dispatcher</ListItem></Appear>
+                        <Appear><ListItem>Dispatcher : Dispatch des événements proviennent d'une source externe (IO)</ListItem></Appear>
                         <Appear><ListItem>Boucle (Loop) sur lui même</ListItem></Appear>
-                        <Appear><ListItem>Événements proviennent d'une source externe (IO)</ListItem></Appear>
                     </List>
                 </Slide>
                 <Slide>
@@ -165,7 +167,7 @@ export default class Presentation extends React.Component {
                         <ListItem>pcntl_async_signals (>= 7.1)</ListItem>
                         <ListItem>Workers : RabbitMQ / Gearman / ...</ListItem>
                         <ListItem>proc_open</ListItem>
-                        <ListItem>Ajax...</ListItem>
+                        <ListItem>...</ListItem>
                         <ListItem>Mais pas d'event loop</ListItem>
                     </List>
                 </Slide>
@@ -175,14 +177,14 @@ export default class Presentation extends React.Component {
                     fill
                     className="codeslide"
                     color="black"
-                    textSize="20"
+                    textSize="40"
                     code={require("raw-loader!./event-loop.php")}
                     ranges={[
                         { loc: [0, 270], title: "PHP Event Loop" },
                         { loc: [2, 3], title: "Registre" },
                         { loc: [4, 5], title: "Function Asynchrone" },
                         { loc: [5, 8], title: "Stream non bloquant" },
-                        { loc: [9, 15], title: "Watcher" },
+                        { loc: [9, 13], title: "Watcher" },
                         { loc: [17, 18], title: "Dispatch" },
                         { loc: [18, 25], title: "Evenements" },
                         { loc: [26, 32], title: "Dispatch" },
@@ -211,20 +213,14 @@ export default class Presentation extends React.Component {
                     <Heading size={2}>Callback Hell</Heading>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
 sendRequestAsync($fooRequest, function ($response) {
-    $barRequest = $response->data;
-
-    sendRequestAsync($barRequest, function ($response) {
-        $bazRequest = $response->data;
-
-        sendRequestAsync($bazRequest, function ($response) {
-            ...
+    sendRequestAsync($response->getA(), function ($response) {
+        sendRequestAsync($response->getB(), function ($response) {
+            //...
         });
     });
 });
@@ -248,8 +244,25 @@ sendRequestAsync($fooRequest, function ($response) {
                 </Slide>
                 <Slide>
                     <Heading size={2}>Promise</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="50"
+                            lang="php"
+                            theme="external"
+                            source={`
+interface Promise {
+    public function then(
+        callable $onResolve,
+        callable $onFailure
+    ): Promise;
+}
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Promise</Heading>
                     <List>
-                        <ListItem><Code lang="php">public function then($onResolve, $onFailure);</Code></ListItem>
                         <ListItem>Permet de chainer des traitements</ListItem>
                         <ListItem>Gestion d'erreurs</ListItem>
                         <ListItem>Standard (Promise A+)</ListItem>
@@ -259,24 +272,37 @@ sendRequestAsync($fooRequest, function ($response) {
                     <Heading size={2}>Promise Exemple</Heading>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
-$promise = $client->sendAsyncRequest($request);
-$promise
+$client->sendAsyncRequest($request);
     ->then(function ($response) {
         return $response->getBody();
     })
     ->then(function ($body) {
         return json_decode($body);
     })
-    ->then(function ($json) {
-        // DO some stuff
-    });
+    //...
 ;
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Parallèle ?</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
+                            lang="php"
+                            theme="external"
+                            source={`
+$promise1 = $client->sendAsyncRequest($request1);
+$promise2 = $client->sendAsyncRequest($request2);
+
+\Promise::all([$promise1, $promise2])->then(function ($responses) {
+    $response1 = $responses[0];
+});
           `}
                         />
                     </ClearCodePaneContext>
@@ -302,60 +328,163 @@ $promise
                 <Slide>
                     <Heading size={2}>Promise :/</Heading>
                     <List>
-                        <ListItem>Impossible de typehint un callback (PHP)</ListItem>
-                        <ListItem>Impossible de renvoyer une promise dans un callable (dépend de l'implementation)</ListItem>
+                        <ListItem>Impossible de forcer la signature d'un callback</ListItem>
+                        <ListItem>Impossible de renvoyer une promise dans un callable (dépend de l'implementation) -> promise hell</ListItem>
                         <ListItem>Then, then, then, then ....</ListItem>
-                        <ListItem>Simplement un standard sur les callbacks</ListItem>
                     </List>
                 </Slide>
                 <Slide>
                     <Heading size={2}>Async / Await</Heading>
-                    <List>
-                        <Appear><ListItem>Javascript</ListItem></Appear>
-                        <Appear><ListItem>C#</ListItem></Appear>
-                    </List>
+                    <Text>Javascript, C#, ...</Text>
                 </Slide>
                 <Slide>
-                    <Heading size={2} fit>PHP ? AMP avec yield</Heading>
-                    <Image src={images.amp} display="inline" margin={10}/>
-                </Slide>
-                <Slide>
-                    <Heading size={2}>Yield</Heading>
+                    <Heading size={2}>Async / Await</Heading>
+                    <br />
+                    <Text>Javascript</Text>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="50"
+                            lang="js"
+                            theme="external"
+                            source={`
+async function doSomething(request) {
+    const response = await sendAsyncRequest(request);
+}
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Async / Await</Heading>
+                    <br />
+                    <Text>Javascript</Text>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="50"
+                            lang="js"
+                            theme="external"
+                            source={`
+const response = await sendAsyncRequest(request);
+const response2 = await sendAsyncRequest(
+    new Request(response.getFoo())
+);
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Async / Await</Heading>
+                    <br />
+                    <Text>Parrallèle</Text>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="50"
+                            lang="js"
+                            theme="external"
+                            source={`
+const promise1 = sendAsyncRequest(request1);
+const promise2 = sendAsyncRequest(request2);
+
+const responses = await [promise1, promise2];
+response1 = responses[0];
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>PHP ?</Heading>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Generator !</Heading>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Generator ?</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
+function toSleepOrNotToSleep() {
+    yield 1;
+    sleep(10);
+    yield 2;
+}
 
+foreach (toSleepOrNotToSleep() as $value) {
+    echo $value;
+}
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Generator ++</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
+                            lang="php"
+                            theme="external"
+                            source={`
+function coucou(): \\Generator {
+    $value = yield 1;
+    echo $value;
+}
+
+$generator = coucou();
+$generator->send('PHPTour2018'); // Affiche PHPTour2018
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Callback vers Generator</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
+                            lang="php"
+                            theme="external"
+                            source={`
+function sendAsyncRequest($request): \\Generator {
+    // ...
+    $readed = yield $stream;
+}
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Callback vers Generator</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
+                            lang="php"
+                            theme="external"
+                            source={`
+function dispatch() {
+    // ...
+    $stream = $onResolve->current();
+    // ...
+    $onResolve->resume($readed);
+}
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Utilisation</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="50"
+                            lang="php"
+                            theme="external"
+                            source={`
 $response = yield $client->sendAsyncRequest($request);
 $body = yield $response->getBody();
 $json = json_decode($body);
           `}
                         />
                     </ClearCodePaneContext>
-                </Slide>
-                <Slide>
-                    <Heading size={2}>Promise</Heading>
-                    <ClearCodePaneContext>
-                        <CodePane
-                            textSize="20"
-                            lang="php"
-                            theme="external"
-                            source={`
-<?php
-
-$promise = $client->sendAsyncRequest($request);
-$promise->onResolve(function ($response, $error) {
-    // ...
-});
-          `}
-                        />
-                    </ClearCodePaneContext>
-                </Slide>
-                <Slide>
-                    <Heading size={2}>Magie ?</Heading>
                 </Slide>
                 <Slide>
                     <Image width="100%" src={images.call} />
@@ -368,6 +497,10 @@ $promise->onResolve(function ($response, $error) {
                 </Slide>
                 <Slide>
                     <Image width="100%" src={images.returnImage} />
+                </Slide>
+                <Slide>
+                    <Heading size={2}>AMP</Heading>
+                    <Image src={images.amp} display="inline" margin={10}/>
                 </Slide>
                 <Slide>
                     <Heading size={2}>Librairies</Heading>
@@ -399,6 +532,23 @@ $promise->onResolve(function ($response, $error) {
                         <ListItem>Microservice</ListItem>
                         <ListItem>...</ListItem>
                     </List>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Parallèle</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
+                            lang="php"
+                            theme="external"
+                            source={`
+$promise1 = $client->sendAsyncRequest($request1);
+$promise2 = $client->sendAsyncRequest($request2);
+
+$responses = yield [$promise1, $promise2];
+$response1 = $responses[0];
+          `}
+                        />
+                    </ClearCodePaneContext>
                 </Slide>
                 <Slide>
                     <Layout style={{ display: "inline-box" }}>
@@ -443,21 +593,13 @@ $promise->onResolve(function ($response, $error) {
                     <Heading size={2}>Exemple : PSR7</Heading>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="50"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
 /**
- * Read data from the stream.
- *
- * @param int $length Read up to $length bytes from the object and return
- *     them. Fewer than $length bytes may be returned if underlying stream
- *     call returns fewer bytes.
- * @return string Returns the data read from the stream, or an empty string
- *     if no bytes are available.
- * @throws \\RuntimeException if an error occurs.
+ * ...
+ * @return string Returns the data read from the stream ...
  */
 public function read($length);
           `}
@@ -478,15 +620,17 @@ public function read($length);
                         0 Promise<br />
                         0 Yield
                     </Heading>
-                    <Text>Ce code est synchrone ET asynchrone</Text>
+                </Slide>
+                <Slide>
+                    <Heading size={5} caps textColor="secondary" bgColor="white" margin={10}>
+                        Ce code est synchrone ET asynchrone
+                    </Heading>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="50"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
 $response = $client->sendRequest($request);
 $body = $response->getBody();
 $json = json_decode($body);
@@ -507,13 +651,11 @@ $json = json_decode($body);
                     <Text>Ce code est provisoire (RFC)</Text>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
-$fiber = new Fiber(function () {
+$fiber = new \\Fiber(function () {
 	$app = new Application();
 	$app->run();
 });
@@ -529,14 +671,12 @@ $stream = $fiber->resume();
                     <Text>Ce code est provisoire (RFC)</Text>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
 // Plus loin dans le code...
-$read = Fiber::yield($stream);
+$read = \\Fiber::yield($stream);
           `}
                         />
                     </ClearCodePaneContext>
@@ -546,19 +686,15 @@ $read = Fiber::yield($stream);
                     <Text>Ce code est provisoire (RFC)</Text>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
-$fiber = new Fiber(function () {
-	$app = new Application();
-	$app->run();
-});
+...
 
 // Lancement de notre application
 $stream = $fiber->resume();
+
 $data = fread(stream, 8192);
 $stream = $fiber->resume($data);
           `}
@@ -570,14 +706,12 @@ $stream = $fiber->resume($data);
                     <Text>Ce code est provisoire (RFC)</Text>
                     <ClearCodePaneContext>
                         <CodePane
-                            textSize="20"
+                            textSize="40"
                             lang="php"
                             theme="external"
                             source={`
-<?php
-
 // Plus loin dans le code...
-$read = Fiber::yield($stream);
+$read = \\Fiber::yield($stream);
 
 echo $read;
           `}

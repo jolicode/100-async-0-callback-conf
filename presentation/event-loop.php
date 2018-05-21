@@ -2,45 +2,45 @@
 
 $eventLoopRegistry = [];
 
-function sendRequestAsync($request, $onResolve) use(&$eventLoopRegistry) {
+function sendAsync($request, callable $onResolve) {
     $stream = fsockopen('tcp://127.0.0.1', 80);
     stream_set_blocking($stream, false);
     fwrite($stream, (string) $request);
 
     $eventLoopRegistry[(int)$stream] = [
         'stream' => $stream,
-        'onResolve' =>  function ($readed) use($onResolve) {
-            $onResolve($readed);
-        },
+        'onResolve' => $onResolve,
     ];
 }
 
-function dispatch(array $eventLoopRegistry) {
+
+
+function dispatchLoop(array $eventLoopRegistry) {
     $streams = [];
 
-    foreach ($eventLoopRegistry as $streamId => $watcher) {
+    foreach ($eventLoopRegistry as $watcher) {
         $streams[] = $watcher['stream'];
     }
 
-    stream_select($streams, $write = NULL, $except = NULL, 0);
+    stream_select($streams, ..., 0);
 
     foreach ($streams as $changedStream) {
-        $onResolve = $eventLoopRegistry[(int)$changedStream]['onResolve'];
+        $onResolve = $eventLoopRegistry[...]
         $onResolve(fread($changedStream, 8192));
 
-        unset($eventLoopRegistry[(int)$changedStream]);
+        unset($eventLoopRegistry[...]);
     }
 
     if (count($eventLoopRegistry) > 0) {
-        dispatch($eventLoopRegistry);
+        dispatchLoop($eventLoopRegistry);
     }
 }
 
-sendRequestAsync($fooRequest, function ($response) {
+sendAsync($fooRequest, function ($response) {
     echo 'Done';
 });
-sendRequestAsync($barRequest, function ($response) {
+sendAsync($barRequest, function ($response) {
     echo 'Done 2';
 });
 
-dispatch($eventLoopRegistry);
+dispatchLoop($eventLoopRegistry);

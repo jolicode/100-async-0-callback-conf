@@ -3,6 +3,7 @@
     background-color: white !important;
     color: black  !important;
     z-index: 1000;
+    top: -150px !important;
 }
 
 .codeslide pre {
