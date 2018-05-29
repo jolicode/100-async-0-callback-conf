@@ -2,6 +2,8 @@
 // src/Controller/LuckyController.php
 namespace App\Controller;
 
+use function Amp\GreenThread\async;
+use function Amp\GreenThread\await;
 use App\HttpClientInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -20,9 +22,11 @@ class HomeController
         $stopwatch = new Stopwatch();
         $event = $stopwatch->start('profile');
 
-        $response1 = $this->client->request('http://httpbin.org/delay/1');
-        $response2 = $this->client->request('http://httpbin.org/delay/1');
-        $response3 = $this->client->request('http://httpbin.org/delay/1');
+        [$response1, $response2, $response3] = await([
+            async(function () { return $this->client->request('http://httpbin.org/delay/1'); }),
+            async(function () { return $this->client->request('http://httpbin.org/delay/1'); }),
+            async(function () { return $this->client->request('http://httpbin.org/delay/1'); }),
+        ]);
 
         $event->stop();
         $duration = $event->getDuration();
