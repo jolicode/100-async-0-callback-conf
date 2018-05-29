@@ -29,7 +29,7 @@ services:
 
 
     App\HttpClientInterface:
-        alias: App\HttpClient
+        alias: App\HttpClientAsync
 
     App\HttpClient: ~
     App\HttpClientAsync: ~
