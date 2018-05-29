@@ -1,11 +1,9 @@
 <?php
 
-use Amp\Loop; // !!!!!!!!!!!!!!!!!!!
-use App\Kernel; // !!!!!!!!!!!!!!!!!!!
+use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
-use function Amp\GreenThread\coroutine; // !!!!!!!!!!!!!!!!!!!
 
 require __DIR__.'/../vendor/autoload.php';
 
@@ -36,9 +34,6 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
 
 $kernel = new Kernel($env, $debug);
 $request = Request::createFromGlobals();
-
-Loop::run(coroutine(function () use ($kernel, $request): void { // !!!!!!!!!!!!!!!!!!!
-    $response = $kernel->handle($request);
-    $response->send();
-    $kernel->terminate($request, $response);
-})); // !!!!!!!!!!!!!!!!!!!
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);

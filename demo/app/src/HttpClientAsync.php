@@ -8,7 +8,7 @@ use Amp\Artax\DefaultClient;
 use Amp\Artax\Response;
 use function Amp\GreenThread\await;
 
-class HttpClientAsync
+class HttpClientAsync implements HttpClientInterface
 {
     private $client;
 
@@ -17,7 +17,7 @@ class HttpClientAsync
         $this->client = new DefaultClient();
     }
 
-    public function request($url)
+    public function request($url): string
     {
         /** @var Response $response */
         $response = await($this->client->request($url));

@@ -3,4 +3,4 @@
 #    controller: App\Controller\DefaultController::index
 app_lucky_number:
     path: /
-    controller: App\Controller\YoloController::hello
+    controller: App\Controller\HomeController::hello
