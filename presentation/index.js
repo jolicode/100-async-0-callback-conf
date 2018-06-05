@@ -9,7 +9,6 @@ import preloader from "spectacle/lib/utils/preloader";
 import {
     Appear,
     CodePane,
-    Code,
     Deck,
     Heading,
     ListItem,
@@ -19,9 +18,8 @@ import {
     Image,
     Layout,
     Fill,
-    Fit,
     Link,
-} from "spectacle";
+} from "spectacle/lib/index";
 
 // Import theme
 import createTheme from "spectacle/lib/themes/default";
@@ -454,6 +452,12 @@ function sendAsyncRequest($request): \\Generator {
                     </ClearCodePaneContext>
                 </Slide>
                 <Slide>
+                    <Image width="100%" src={images.call} />
+                </Slide>
+                <Slide>
+                    <Image width="100%" src={images.yieldImage} />
+                </Slide>
+                <Slide>
                     <Heading size={2}>Callback vers Generator</Heading>
                     <ClearCodePaneContext>
                         <CodePane
@@ -463,9 +467,33 @@ function sendAsyncRequest($request): \\Generator {
                             source={`
 function dispatch() {
     // ...
-    $stream = $onResolve->current();
+    $stream = $generator->current();
     // ...
-    $onResolve->resume($readed);
+    stream_select([$stream], ...);
+    $readed = fread($stream, 8192);
+
+    $generator->resume($readed);
+}
+          `}
+                        />
+                    </ClearCodePaneContext>
+                </Slide>
+                <Slide>
+                    <Image width="100%" src={images.resume} />
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Callback vers Generator</Heading>
+                    <ClearCodePaneContext>
+                        <CodePane
+                            textSize="40"
+                            lang="php"
+                            theme="external"
+                            source={`
+function sendAsyncRequest($request): \\Generator {
+    // ...
+    $readed = yield $stream;
+    // Callback
+    echo $readed;
 }
           `}
                         />
@@ -481,19 +509,11 @@ function dispatch() {
                             source={`
 $response = yield $client->sendAsyncRequest($request);
 $body = yield $response->getBody();
-$json = json_decode($body);
+
+return json_decode($body);
           `}
                         />
                     </ClearCodePaneContext>
-                </Slide>
-                <Slide>
-                    <Image width="100%" src={images.call} />
-                </Slide>
-                <Slide>
-                    <Image width="100%" src={images.yieldImage} />
-                </Slide>
-                <Slide>
-                    <Image width="100%" src={images.resume} />
                 </Slide>
                 <Slide>
                     <Image width="100%" src={images.returnImage} />
@@ -661,7 +681,7 @@ $fiber = new \\Fiber(function () {
 });
 
 // Lancement de notre application
-$stream = $fiber->resume();
+$stream = $fiber->start(); // ou ->resume(); ?
           `}
                         />
                     </ClearCodePaneContext>
@@ -675,8 +695,12 @@ $stream = $fiber->resume();
                             lang="php"
                             theme="external"
                             source={`
-// Plus loin dans le code...
-$read = \\Fiber::yield($stream);
+// Async implementation
+function sendRequest($request): string {
+    // ...
+    $readed = \\Fiber::yield($stream);
+    // ...
+}
           `}
                         />
                     </ClearCodePaneContext>
@@ -690,13 +714,14 @@ $read = \\Fiber::yield($stream);
                             lang="php"
                             theme="external"
                             source={`
-...
-
 // Lancement de notre application
-$stream = $fiber->resume();
-
-$data = fread(stream, 8192);
-$stream = $fiber->resume($data);
+$stream = $fiber->start(); // ou ->resume(); ?
+$stream2 = $fiber2->start();
+// ...
+stream_select([$stream, $stream2], ....);
+// ...
+$readed = fread($stream, 8192);
+$stream = $fiber->resume($readed);
           `}
                         />
                     </ClearCodePaneContext>
@@ -710,10 +735,13 @@ $stream = $fiber->resume($data);
                             lang="php"
                             theme="external"
                             source={`
-// Plus loin dans le code...
-$read = \\Fiber::yield($stream);
+// Async implementation
+function sendRequest($request): string {
+    // ...
+    $readed = \\Fiber::yield($stream);
 
-echo $read;
+    return $readed;
+}
           `}
                         />
                     </ClearCodePaneContext>
@@ -721,6 +749,9 @@ echo $read;
                 <Slide>
                     <Heading size={2}>Sync / Async API Compatible</Heading>
                     <Text>Être asynchrone n'est plus qu'un détail d'implémentation</Text>
+                </Slide>
+                <Slide>
+                    <Heading size={2}>Demo</Heading>
                 </Slide>
                 <Slide>
                     <Layout style={{ display: "inline-box" }}>
